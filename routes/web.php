@@ -13,21 +13,21 @@ Route::get("/dashboard", function () {
   return view("dashboard");
 })->middleware(["auth", "verified"])->name("dashboard");
 
+Route::get("/studentslist", [StudentController::class, 'index'])->name("students");
+
 Route::middleware("auth")->group(function () {
   Route::get("/profile", [ProfileController::class, "edit"])->name("profile.edit");
   Route::patch("/profile", [ProfileController::class, "update"])->name("profile.update");
   Route::delete("/profile", [ProfileController::class, "destroy"])->name("profile.destroy");
 
-
-
-  Route::prefix("students")->name("students.")->controller(StudentController::class)->group(function () {
-    Route::get("/", "index")->name("index");
-    Route::get("/view", "student")->name("view");
-    Route::post("/add", "student_add")->name("add");
-    Route::get("/edit/{id}", "student_edit_form")->name("edit.form");
-    Route::put("/edit", "student_edit")->name("edit");
-    Route::delete("/delete/{id}", "student_delete")->name("delete");
-  });
+  // Route::prefix("students")->name("students.")->controller(StudentController::class)->group(function () {
+  //   Route::get("/", "index")->name("index");
+  //   Route::get("/view", "student")->name("view");
+  //   Route::post("/add", "student_add")->name("add");
+  //   Route::get("/edit/{id}", "student_edit_form")->name("edit.form");
+  //   Route::put("/edit", "student_edit")->name("edit");
+  //   Route::delete("/delete/{id}", "student_delete")->name("delete");
+  // });
 
   Route::prefix("users")->name("users.")->controller(UserController::class)->group(function () {
     Route::get("/", "index")->name("index");                                   // show users data
